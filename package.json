@@ -1,0 +1,16 @@
+{
+  "name": "Cypress-Lighthouse-Demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "cypress open"
+  },
+  "keywords": [],
+  "author": "QA BOX LET'S TEST<qaboxletstest@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "cypress": "^7.1.0",
+    "cypress-audit": "^0.3.0"
+  }
+}

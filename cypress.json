@@ -1,0 +1,5 @@
+{
+    "baseUrl": "https://www.google.co.in/",
+    "taskTimeout": 160000,
+    "failOnStatusCode": false
+}
