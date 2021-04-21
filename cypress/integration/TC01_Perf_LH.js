@@ -1,7 +1,7 @@
 /// <reference types="Cypress" />
 
 describe('Google website', function () {
-    it.only('should run lighthouse performance audits using default thresholds', function () {
+    it.skip('should run lighthouse performance audits using default thresholds', function () {
         cy.visit('/');
         const thresholds = {
             "performance": 50,
@@ -46,11 +46,4 @@ describe('Google website', function () {
         cy.visit('/');
         cy.lighthouse(thresholds, lighthouseConfig);
     });
-
-    it.skip('Generate HTML Report', { baseUrl: 'https://googlechrome.github.io/lighthouse/viewer/' }, () => {
-        cy.visit('/')
-        cy.readFile('./result.json').then(data => {
-            cy.get('div.viewer-placeholder').invoke('val', data).trigger('change')
-        })
-    });
-});
+})

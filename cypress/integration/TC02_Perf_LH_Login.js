@@ -64,7 +64,7 @@ describe('Login website', () => {
         cy.lighthouse(thresholds, lighthouseConfig)
     });
 
-    it.only('should run lighthouse performance audits using default thresholds', { baseUrl: 'https://react-redux.realworld.io/#/login?_k=x44w03' }, () => {
+    it.skip('should run lighthouse performance audits using default thresholds', { baseUrl: 'https://react-redux.realworld.io/#/login?_k=x44w03' }, () => {
         cy.visit('/');
         const thresholds = {
             "performance": 50,
