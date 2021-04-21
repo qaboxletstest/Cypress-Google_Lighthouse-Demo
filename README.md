@@ -198,6 +198,7 @@ module.exports = (on, config) => {
 };
 ```
 
+Now, with the full JSON file, you can view the html report from [Lighthouse-Report-Viewer](https://googlechrome.github.io/lighthouse/viewer/). That's great but we would also like to know our AUT performance over time. To achieve that we need to keep storing this audit data and generate over time performance graphs.
 
 
 
