@@ -21,7 +21,23 @@ Out of these five categories (performance, accessibility, progressive web apps, 
 
 How can we Audit Web Pages secured behind Authentication?
 
-Answer is simple, Cypress would take care care of Authentication part and expose Secured Web Pages to be audited by Lighthouse. We require a plugin in Cypress to achieve this and the name of that Plugin is [*cypress-audit*](https://www.npmjs.com/package/cypress-audit)
+Answer is simple, Cypress would take care care of Authentication part and expose Secured Web Pages to be audited by Lighthouse. We require a plugin in Cypress to achieve this and the name of that Plugin is [*cypress-audit*](https://www.npmjs.com/package/cypress-audit). This plugin, lets you integrate Lighthouse scores straight from your Cypress tests.
+
+There are six important performance metrics which are important to understand.
+
+1. First Contentful Paint (FCP)
+FCP measures how long it takes for the browser to render the first piece of DOM content after a user navigates to your page.
+1. Large Contentful Paint (LCP)
+LCP measures how long it takes for the browser to render the largest piece of DOM content (image or text block) after a user navigates to your page.
+1. Speed Index
+Speed index measures how long the content visually loads on page load.
+1. Time to Interactive (TTI)
+TTI measures how long it takes for the page to become fully interactive.
+1. Total Blocking Time (TBT)
+TBT measures the time the page is blocked from responding to user inputs. Anything that executes above 50ms is considered a blocking task.
+1. Cumulative Layout Shift (CLS)
+CLS measures the visual stability of your page.
+
 
 To Install it 
 > npm install --save-dev cypress-audit
