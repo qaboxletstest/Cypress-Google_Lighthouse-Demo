@@ -12,12 +12,21 @@ However, even if the response times for different requests are fast enough, at t
 
 One of the most popular and used tools out there for testing the performance of a website is Google Lighthouse. It is an open source tool used for auditing the quality and performance of your website. It's a great choice due to its versatility and ability to measure different areas such as web performance, accessibility, search engine optimisation and more. 
 
-1. Cypress - Functional Automation testing tool
-1. Lighthouse - Lighthouse is an open-source, automated tool for improving the quality of web pages. You can run it against any web page, public or requiring authentication. It has audits for performance, accessibility, progressive web apps, SEO and best-practices.
-
 You can run Lighthouse in Chrome DevTools, from the command line, from a [web UI](https://developers.google.com/speed/pagespeed/insights/), or as a Node module. You give Lighthouse a URL to audit, it runs a series of audits against the page, and then it generates a report on how well the page did. From there, use the failing audits as indicators on how to improve the page. Each audit has a reference doc explaining why the audit is important, as well as how to fix it.
 
-Out of these five categories (performance, accessibility, progressive web apps, SEO and best-practices), performance is the most important one. 
+Out of these five categories (performance, accessibility, progressive web apps, SEO and best-practices), performance is the most important one. The great thing about Google Lighthouse tool is, if we want to run Lighthouse in an automated fashion, we can. And it would be awesome if we can Run Lighthouse audits directly in our E2E test suites. Meaning, it's time to extend Cypress E2E tests to also accomodate Google Lighthouse Audits. Excited??? Cool.
+
+1. Cypress - would be used for Functional Automation testing and
+1. Lighthouse - would be used to run it against AUT web page, be it public or require authentication. 
+
+How can we Audit Web Pages secured behind Authentication?
+
+Answer is simple, Cypress would take care care of Authentication part and expose Secured Web Pages to be audited by Lighthouse. We require a plugin in Cypress to achieve this and the name of that Plugin is [*cypress-audit*](https://www.npmjs.com/package/cypress-audit)
+
+To Install it 
+> npm install --save-dev cypress-audit
+
+
 
 
 
