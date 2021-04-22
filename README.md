@@ -19,7 +19,7 @@ module.exports = (on, config) => {
   });
 };
 ```
->*  Inform Cypress of Lighthouse Command
+>*  Inform Cypress of Lighthouse Command - add the following line in the cypress/support/commands.js file
 
 > ```import ‘cypress-audit/commands’;```
 
