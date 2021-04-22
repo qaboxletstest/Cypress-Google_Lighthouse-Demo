@@ -82,9 +82,6 @@ describe('Lighthouse', () => {
 ```
 
 ## Accessing the raw reports
-When using custom tools, it can be convenient to directly access the raw information they provide for doing manual things, such as generating a custom reports.
-
-To do so, you can pass a callback function to the task initializer. Then, when an audit is run, this callback will we executed with the raw data of the underlying tool.
 
 In the cypress/plugins/index.js file:
 ```
