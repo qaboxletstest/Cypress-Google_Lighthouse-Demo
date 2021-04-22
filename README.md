@@ -2,7 +2,10 @@
 
 This is an example repository to showcase how you can use cypress-audit to easily integrate lighthouse commands into your Cypress tests.
 
-## Setup 
+## Usage
+Just download this project and in terminal run npm install
+
+## Setup Process - For explaination purpose
 >*  Install cypress-audit
 >```npm install --save-dev cypress-audit```
 >*  Configure Lighthouse CLI
