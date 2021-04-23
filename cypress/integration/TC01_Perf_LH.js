@@ -6,7 +6,7 @@ describe('Google website', function () {
         cy.lighthouse();
     });
 
-    it.only('should run lighthouse performance audits using custom thresholds', () => {
+    it.skip('should run lighthouse performance audits using custom thresholds', () => {
         const thresholds = {
             performance: 50,
             'first-contentful-paint': 2000,
