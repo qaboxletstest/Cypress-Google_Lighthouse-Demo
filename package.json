@@ -1,10 +1,10 @@
 {
   "name": "Cypress-Lighthouse-Demo",
   "version": "1.0.0",
-  "description": "",
+  "description": "Cypress-Lighthouse-Demo",
   "main": "index.js",
   "scripts": {
-    "test": "cypress run"
+    "test": "cypress open"
   },
   "keywords": [],
   "author": "QA BOX LET'S TEST<qaboxletstest@gmail.com>",

@@ -3,29 +3,10 @@
 describe('Google website', function () {
     it.skip('should run lighthouse performance audits using default thresholds', function () {
         cy.visit('/');
-        const thresholds = {
-            "performance": 50,
-            "accessibility": 50,
-            "best-practices": 50,
-            "seo": 50,
-            "pwa": 50
-        };
-
-        const lighthouseOptions = {
-            disableStorageReset: false
-        };
-
-        const lighthouseConfig = {
-            formFactor: 'desktop',
-            screenEmulation: {
-                disabled: true
-            }
-        };
-        const name = `${this.test.fullTitle}`
-        cy.lighthouse(thresholds, lighthouseConfig);
+        cy.lighthouse();
     });
 
-    it.skip('should run lighthouse performance audits using custom thresholds', () => {
+    it.only('should run lighthouse performance audits using custom thresholds', () => {
         const thresholds = {
             performance: 50,
             'first-contentful-paint': 2000,

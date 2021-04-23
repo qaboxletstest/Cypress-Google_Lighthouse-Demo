@@ -1,1 +1,7 @@
-{"url":"https://www.google.co.in/","performance":32,"accessibility":90,"best-practices":88,"seo":82,"pwa":36}
+{
+  "url": "https://www.google.co.in/",
+  "performance": 42,
+  "accessibility": 90,
+  "seo": 82,
+  "pwa": 36
+}
