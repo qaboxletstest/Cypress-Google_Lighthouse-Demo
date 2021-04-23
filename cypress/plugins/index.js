@@ -20,11 +20,11 @@
 //   // `config` is the resolved Cypress config
 // }
 
-const { lighthouse, pa11y, prepareAudit } = require('cypress-audit');
-const fs = require('fs')
+const { lighthouse, pa11y, prepareAudit } = require("cypress-audit");
+const fs = require("fs");
 
 module.exports = (on, config) => {
-  on('before:browser:launch', (browser = {}, launchOptions) => {
+  on("before:browser:launch", (browser = {}, launchOptions) => {
     prepareAudit(launchOptions);
   });
 
@@ -43,30 +43,62 @@ module.exports = (on, config) => {
   // 3. Configure Lighthouse CLI, invoke the lighthouse process, access raw report
   // Generate Categories and Audit Scores and stores these into respective JSON files
 
-  // on('task', {
-  //   lighthouse: lighthouse((lighthouseReport) => {
-  //     const categories = lighthouseReport.lhr.categories;
-  //     const audits = lighthouseReport.lhr.audits;
-  //     const formattedAudit = Object.keys(audits).reduce(
-  //       (metrics, curr) => ({
-  //         ...metrics,
-  //         [curr]: audits[curr].numericValue
-  //       }),
-  //       {}
-  //     );
-  //     const formattedAuditsResults = { url: lighthouseReport.lhr.requestedUrl, ...formattedAudit };
-  //     fs.writeFileSync(`./audit.json`, JSON.stringify(formattedAuditsResults, null, 2));
-  //     const formattedCategories = Object.keys(categories).reduce(
-  //       (metrics, curr) => ({
-  //         ...metrics,
-  //         [curr]: categories[curr].score * 100
-  //       }),
-  //       {}
-  //     );
-  //     const formattedCategoriesResults = { url: lighthouseReport.lhr.requestedUrl, ...formattedCategories };
-  //     fs.writeFileSync(`./categories.json`, JSON.stringify(formattedCategoriesResults, null, 2));
-  //   }),
-  // });
+  on("task", {
+    lighthouse: lighthouse((lighthouseReport) => {
+      const categories = lighthouseReport.lhr.categories;
+      const audits = lighthouseReport.lhr.audits;
+      const formattedAudit = Object.keys(audits).reduce(
+        (metrics, curr) => ({
+          ...metrics,
+          [curr]: audits[curr].numericValue,
+        }),
+        {}
+      );
+      const formattedAuditsResults = {
+        url: lighthouseReport.lhr.requestedUrl,
+        ...formattedAudit,
+      };
+      const auditReportName =
+        "./audit-" +
+        lighthouseReport.lhr.requestedUrl.replace(/:|\//g, function (x) {
+          return "";
+        }) +
+        " - " +
+        lighthouseReport.lhr.fetchTime.split("T")[0] +
+        ".json";
+
+      fs.writeFileSync(
+        auditReportName,
+        JSON.stringify(formattedAuditsResults, null, 2)
+      );
+      const formattedCategories = Object.keys(categories).reduce(
+        (metrics, curr) => ({
+          ...metrics,
+          [curr]: categories[curr].score * 100,
+        }),
+        {}
+      );
+
+      const formattedCategoriesResults = {
+        url: lighthouseReport.lhr.requestedUrl,
+        ...formattedCategories,
+      };
+
+      const categoriesReportName =
+        "./categories-" +
+        lighthouseReport.lhr.requestedUrl.replace(/:|\//g, function (x) {
+          return "";
+        }) +
+        " - " +
+        lighthouseReport.lhr.fetchTime.split("T")[0] +
+        ".json";
+
+      fs.writeFileSync(
+        categoriesReportName,
+        JSON.stringify(formattedCategoriesResults, null, 2)
+      );
+    }),
+  });
 
   // 4. Configure Lighthouse CLI, invoke the lighthouse process, access raw report
   // and store this whole report inside a JSON file
