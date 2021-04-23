@@ -107,7 +107,7 @@ module.exports = (on, config) => {
 ```
 
 However, printing to the console isn't that helpful. Hence we have following options: -
-* Save the Audits and Categories scores in seperate JSON files. 
+* Save the Audits and Categories scores in seperate JSON files - The same logic is used by this plugin internally (cypress-audit/src/performances/helpers.js)
 ```
 module.exports = (on, config) => {
   on('before:browser:launch', (browser = {}, launchOptions) => {
