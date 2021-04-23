@@ -1,4 +1,3 @@
-/// <reference types="cypress" />
 // ***********************************************************
 // This example plugins/index.js can be used to load plugins
 //
@@ -23,63 +22,40 @@
 
 const { lighthouse, pa11y, prepareAudit } = require('cypress-audit');
 const fs = require('fs')
-// const path = require('path')
-// const ReportGenerator = require('lighthouse/lighthouse-core/report/report-generator');
 
 module.exports = (on, config) => {
   on('before:browser:launch', (browser = {}, launchOptions) => {
     prepareAudit(launchOptions);
   });
 
-  // To invoke basic lighthouse process
   on('task', {
-    lighthouse: lighthouse()
+    lighthouse: lighthouse((lighthouseReport) => {
+      const dirPath = './PerfReports'
+      if (!fs.existsSync(dirPath)) {
+        fs.mkdirSync(dirPath)
+      }
+      const name = (lighthouseReport.lhr.requestedUrl).replace(/:|\//g, function (x) { return '' }) + " - " + (lighthouseReport.lhr.fetchTime).split('T')[0]
+      fs.writeFileSync(`${dirPath}/GLH-(${name}).json`, JSON.stringify(lighthouseReport, null, 2))
+      // const categories = lighthouseReport.lhr.categories;
+      // const audits = lighthouseReport.lhr.audits;
+      // const formattedAudit = Object.keys(audits).reduce(
+      //   (metrics, curr) => ({
+      //     ...metrics,
+      //     [curr]: audits[curr].numericValue
+      //   }),
+      //   {}
+      // );
+      // const formattedAuditsResults = { url: lighthouseReport.lhr.requestedUrl, ...formattedAudit };
+      // fs.writeFileSync(`./audit.json`, JSON.stringify(formattedAuditsResults, null, 2));
+      // const formattedCategories = Object.keys(categories).reduce(
+      //   (metrics, curr) => ({
+      //     ...metrics,
+      //     [curr]: categories[curr].score * 100
+      //   }),
+      //   {}
+      // );
+      // const formattedCategoriesResults = { url: lighthouseReport.lhr.requestedUrl, ...formattedCategories };
+      // fs.writeFileSync(`./categories.json`, JSON.stringify(formattedCategoriesResults, null, 2));
+    }),
   });
-
-  // To invoke lighthouse process and access raw report
-  // on('task', {
-  //   lighthouse: lighthouse((lighthouseReport) => {
-  //     console.log(lighthouseReport); // raw lighthouse reports
-  //   }),
-  // });
-
-  // To invoke lighthouse process, access categories and audit scores from raw report
-  // and store the same into respective JSON files
-
-  // on('task', {
-  //   lighthouse: lighthouse((lighthouseReport) => {
-  //     const categories = lighthouseReport.lhr.categories;
-  //     const audits = lighthouseReport.lhr.audits;
-  //     const formattedAudit = Object.keys(audits).reduce(
-  //       (metrics, curr) => ({
-  //         ...metrics,
-  //         [curr]: audits[curr].numericValue
-  //       }),
-  //       {}
-  //     );
-  //     const formattedAuditsResults = { url: lighthouseReport.lhr.requestedUrl, ...formattedAudit };
-  //     fs.writeFileSync(`./audit.json`, JSON.stringify(formattedAuditsResults, null, 2));
-  //     const formattedCategories = Object.keys(categories).reduce(
-  //       (metrics, curr) => ({
-  //         ...metrics,
-  //         [curr]: categories[curr].score * 100
-  //       }),
-  //       {}
-  //     );
-  //     const formattedCategoriesResults = { url: lighthouseReport.lhr.requestedUrl, ...formattedCategories };
-  //     fs.writeFileSync(`./categories.json`, JSON.stringify(formattedCategoriesResults, null, 2));
-  //   }),
-  // });
-
-  // To invoke lighthouse process, access raw report and store the same into unique JSON file for each run
-  // on('task', {
-  //   lighthouse: lighthouse((lighthouseReport) => {
-  //     const dirPath = './PerfReports'
-  //     if (!fs.existsSync(dirPath)) {
-  //       fs.mkdirSync(dirPath)
-  //     }
-  //     const name = (lighthouseReport.lhr.requestedUrl).replace(/:|\//g, function (x) { return '' }) + " - " + (lighthouseReport.lhr.fetchTime).split('T')[0]
-  //     fs.writeFileSync(`${dirPath}/GLH-(${name}).json`, JSON.stringify(lighthouseReport, null, 2))
-  //   }),
-  // });
 };
