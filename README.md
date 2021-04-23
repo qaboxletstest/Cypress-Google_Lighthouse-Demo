@@ -114,28 +114,66 @@ module.exports = (on, config) => {
     prepareAudit(launchOptions);
   });
 
-  on('task', {
+  on("task", {
     lighthouse: lighthouse((lighthouseReport) => {
       const categories = lighthouseReport.lhr.categories;
       const audits = lighthouseReport.lhr.audits;
       const formattedAudit = Object.keys(audits).reduce(
         (metrics, curr) => ({
           ...metrics,
-          [curr]: audits[curr].numericValue
+          [curr]: audits[curr].numericValue,
         }),
         {}
       );
-      const formattedAuditsResults = { url: lighthouseReport.lhr.requestedUrl, ...formattedAudit };
-      fs.writeFileSync(`./audit.json`, JSON.stringify(formattedAuditsResults, null, 2));
+      const formattedAuditsResults = {
+        url: lighthouseReport.lhr.requestedUrl,
+        ...formattedAudit,
+      };
+      const auditReportName =
+        "./audit-" +
+        lighthouseReport.lhr.requestedUrl.replace(
+          /[-[\]{}()*+!<=:?.\/\\^$|#\s,]/g,
+          function (x) {
+            return "";
+          }
+        ) +
+        " - " +
+        lighthouseReport.lhr.fetchTime.split("T")[0] +
+        ".json";
+
+      fs.writeFileSync(
+        auditReportName,
+        JSON.stringify(formattedAuditsResults, null, 2)
+      );
       const formattedCategories = Object.keys(categories).reduce(
         (metrics, curr) => ({
           ...metrics,
-          [curr]: categories[curr].score * 100
+          [curr]: categories[curr].score * 100,
         }),
         {}
       );
-      const formattedCategoriesResults = { url: lighthouseReport.lhr.requestedUrl, ...formattedCategories };
-      fs.writeFileSync(`./categories.json`, JSON.stringify(formattedCategoriesResults, null, 2));
+
+      const formattedCategoriesResults = {
+        url: lighthouseReport.lhr.requestedUrl,
+        ...formattedCategories,
+      };
+
+      const categoriesReportName =
+        "./categories-" +
+        lighthouseReport.lhr.requestedUrl.replace(
+          /[-[\]{}()*+!<=:?.\/\\^$|#\s,]/g,
+          function (x) {
+            return "";
+          }
+        ) +
+        " - " +
+        lighthouseReport.lhr.fetchTime.split("T")[0] +
+        ".json";
+
+      fs.writeFileSync(
+        categoriesReportName,
+        JSON.stringify(formattedCategoriesResults, null, 2)
+      );
     }),
   });
 };
@@ -154,7 +192,7 @@ module.exports = (on, config) => {
       if (!fs.existsSync(dirPath)) {
         fs.mkdirSync(dirPath)
       }
-      const name = (lighthouseReport.lhr.requestedUrl).replace(/:|\//g, function (x) { return '' }) + " - " + (lighthouseReport.lhr.fetchTime).split('T')[0]
+      const name = (lighthouseReport.lhr.requestedUrl).replace(/[-[\]{}()*+!<=:?.\/\\^$|#\s,]/g, function (x) { return '' }) + " - " + (lighthouseReport.lhr.fetchTime).split('T')[0]
       fs.writeFileSync(`${dirPath}/GLH-(${name}).json`, JSON.stringify(lighthouseReport, null, 2))
     }),
   });
