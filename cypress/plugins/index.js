@@ -60,9 +60,12 @@ module.exports = (on, config) => {
       };
       const auditReportName =
         "./audit-" +
-        lighthouseReport.lhr.requestedUrl.replace(/:|\//g, function (x) {
-          return "";
-        }) +
+        lighthouseReport.lhr.requestedUrl.replace(
+          /[-[\]{}()*+!<=:?.\/\\^$|#\s,]/g,
+          function (x) {
+            return "";
+          }
+        ) +
         " - " +
         lighthouseReport.lhr.fetchTime.split("T")[0] +
         ".json";
@@ -86,9 +89,12 @@ module.exports = (on, config) => {
 
       const categoriesReportName =
         "./categories-" +
-        lighthouseReport.lhr.requestedUrl.replace(/:|\//g, function (x) {
-          return "";
-        }) +
+        lighthouseReport.lhr.requestedUrl.replace(
+          /[-[\]{}()*+!<=:?.\/\\^$|#\s,]/g,
+          function (x) {
+            return "";
+          }
+        ) +
         " - " +
         lighthouseReport.lhr.fetchTime.split("T")[0] +
         ".json";
@@ -109,7 +115,7 @@ module.exports = (on, config) => {
   //     if (!fs.existsSync(dirPath)) {
   //       fs.mkdirSync(dirPath)
   //     }
-  //     const name = (lighthouseReport.lhr.requestedUrl).replace(/:|\//g, function (x) { return '' }) + " - " + (lighthouseReport.lhr.fetchTime).split('T')[0]
+  //     const name = (lighthouseReport.lhr.requestedUrl).replace(/[-[\]{}()*+!<=:?.\/\\^$|#\s,]/g, function (x) { return '' }) + " - " + (lighthouseReport.lhr.fetchTime).split('T')[0]
   //     fs.writeFileSync(`${dirPath}/GLH-(${name}).json`, JSON.stringify(lighthouseReport, null, 2))
   //   }),
   // });
